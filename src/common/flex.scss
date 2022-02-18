@@ -1,0 +1,27 @@
+@mixin flex-common {
+    &.direction-row {
+        flex-direction: row;
+   }
+    &.direction-column {
+        flex-direction: column;
+    }
+    &.justify-content-center {
+        justify-content: center;
+    }
+    &.justify-content-spacebetween {
+        justify-content: space-between;
+    }
+    &.wrap {
+        flex-wrap: wrap;
+    }
+    &.nowrap {
+        flex-wrap: nowrap;
+    }
+}
+.flex {
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    @include flex-common
+}
+

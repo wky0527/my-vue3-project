@@ -12,7 +12,6 @@ export const logout = () => {
 }
 export const userInfo = () => {
     return $http({
-        url: 'user-info',
-        method: 'GET'
+        url: 'user',
     })
 }

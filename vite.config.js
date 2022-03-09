@@ -14,15 +14,15 @@ export default defineConfig({
       "~": pathResolve('src') + '/',
     },
   },
-  server: {
-    host: '0.0.0.0',
-    proxy: {
-      '/api': {
-        target: 'https://api.bspapp.com/',
-        changeOrigin: true,
-      }
-    }
-  },
+  // server: {
+  //   host: '0.0.0.0',
+  //   proxy: {
+  //     '/api': {
+  //       target: 'https://api.bspapp.com/',
+  //       changeOrigin: true,
+  //     }
+  //   }
+  // },
   css: {
     preprocessorOptions: {
       scss: {
@@ -32,5 +32,6 @@ export default defineConfig({
   },
   plugins: [
     uni(),
+
   ],
 })

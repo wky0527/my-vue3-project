@@ -1,6 +1,8 @@
 <template>
   <view class="login-wrap">
-    <text class="login-title">Hi，欢迎登录系统</text>
+    <uni-status-bar>
+      <text class="login-title">Hi，欢迎登录系统</text>
+    </uni-status-bar>
     <uni-forms class="login-form" :modelValue="formData" ref="form" :rule="rules" label-position="top">
       <text></text>
       <uni-forms-item required label="账号" name="username">
@@ -69,7 +71,7 @@ export default {
       try{
         const {access_token} = await dispatch('user/login',formData)
         if(access_token){
-          uni.reLaunch({url: '/pages/index/index'});
+          uni.reLaunch({url: '/pages/home/index'});
         }
       }catch (e){
         btnLoading.value = false

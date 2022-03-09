@@ -24,13 +24,14 @@ export default {
 		},
 		//登出
 		async logout({commit}) {
+			await user.logout()
 			commit('setUserinfo',null)
 			commit('setAccessToken','')
 			removeAccessToken();
 		},
 		//获取用户信息
 		async userInfo({commit}) {
-			const {data:data} = await user.userInfo;
+			const data = await user.userInfo();
 			commit('setUserInfo',data)
 			return data
 		}

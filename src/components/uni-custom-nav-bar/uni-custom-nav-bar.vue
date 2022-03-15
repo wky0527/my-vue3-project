@@ -6,29 +6,14 @@
       :statusBar=statusBar
       :shadow=shadow
       :height=height
+      :rightIcon=rightIcon
       @clickLeft="clickLeftEvent"
-      :showSlot="showSlot"
-  >
-    <view slot="left" v-if="showSlot === 'left'" class="nav-bar-custom-left">
-      <slot name="left"></slot>
-    </view>
-    <view slot="default" v-if="showSlot === 'center'" class="nav-bar-custom-center">
-       <slot name="center"></slot>
-    </view>
-    <view slot="right" v-if="showSlot === 'right'" class="nav-bar-custom-right">
-      <slot name="right"></slot>
-    </view>
-  </uni-nav-bar>
+      @clickRight="clickRightEvent"
+  />
 </template>
 <script>
-import {onMounted, reactive, toRefs,watch} from "vue";
+import {reactive, toRefs} from "vue";
 export default {
-  props:{
-    showSlot: {
-      type: String,
-      default: ''
-    }
-  },
   setup(props,{emit}){
     const navBar = reactive({
       leftIcon: 'left',
@@ -38,14 +23,18 @@ export default {
       dark: true,
       title: '标题',
       height: '55px',
-      showSlot: props.showSlot,
+      rightIcon:'',
     })
     const clickLeftEvent = () => {
-      uni.reLaunch({url:'/pages/home/index'})
+      uni.switchTab({url:'/pages/home/index'})
+    }
+    const clickRightEvent = () => {
+      console.log('点击了')
     }
     return {
       ...toRefs(navBar),
-      clickLeftEvent
+      clickLeftEvent,
+      clickRightEvent
     }
   }
 }

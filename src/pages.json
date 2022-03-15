@@ -47,16 +47,45 @@
       }
     },
     {
-      "path": "pages/programming-home/index",
+      "path": "pages/home/programming-home",
       "style": {
         "navigationBarTitleText": "了解编程到家",
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/customer-service/index",
+      "path": "pages/home/customer-service",
       "style": {
         "navigationBarTitleText": "客服咨询",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/home/introduce-teacher",
+      "style": {
+        "navigationBarTitleText": "老师详情",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/home/parent-world",
+      "style": {
+        "navigationBarTitleText": "家长天地",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/home/works",
+      "style": {
+        "navigationBarTitleText": "优秀作品",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/home/match",
+      "style": {
+        "navigationBarTitleText": "更多赛事",
         "navigationStyle": "custom"
       }
     }

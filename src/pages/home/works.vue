@@ -1,6 +1,6 @@
 <template>
   <uni-custom-nav-bar
-    title="了解编程到家"
+      title="优秀作品"
 
   />
 </template>

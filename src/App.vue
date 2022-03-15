@@ -1,7 +1,12 @@
 <script>
+import {getAccessToken} from "@/utils/auth";
 export default {
   onLaunch: function () {
-
+    if (!getAccessToken) {
+      uni.reLaunch({url:'/pages/login/index'})
+    } else {
+      this.$store.dispatch('config/inits');
+    }
   },
   onShow: function () {
 
@@ -13,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import url("https://at.alicdn.com/t/font_3191869_mu0im55htx8.css");
+@import url("https://at.alicdn.com/t/font_3191869_0rmmcynl4l6p.css");
 .uni-nav-bar-text {
   font-size: 16px!important;
 }

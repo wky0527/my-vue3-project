@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import url("https://at.alicdn.com/t/font_3191869_0rmmcynl4l6p.css");
+@import url("https://at.alicdn.com/t/font_3191869_kajrvxwfdne.css");
 .uni-nav-bar-text {
   font-size: 16px!important;
 }

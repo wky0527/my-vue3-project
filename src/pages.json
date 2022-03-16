@@ -88,8 +88,8 @@
         "navigationBarTitleText": "更多赛事",
         "navigationStyle": "custom"
       }
-    }
-  ],
+     }
+    ],
   "tabBar": {
     "color": "#7A7E83",
     "selectedColor": "#2979ff",

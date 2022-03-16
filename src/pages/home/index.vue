@@ -49,19 +49,19 @@
     <uni-segmented-control :current="current" :values="items" @clickItem="selectTeacher" styleType="button"
                            activeColor="#16C4AF"/>
     <view class="content">
-        <view v-show="current === 0" v-for="item in primarySchool" :key="item.id">
-          <navigator :url="'./introduce-teacher?id='+item.id">
-            <uni-card :title="item.title" :sub-title="item['cource']" :extra="'好评率'+item['feedback_rate']"
-                      :thumbnail="item.img">
-              <text>{{item.tag}}</text>
-            </uni-card>
-          </navigator>
-        </view>
+      <view v-show="current === 0" v-for="item in primarySchool" :key="item.id">
+        <navigator :url="'./introduce-teacher?id='+item.id">
+          <uni-card :title="item.title" :sub-title="item['cource']" :extra="'好评率'+item['feedback_rate']"
+                    :thumbnail="item.img">
+            <text>{{ item.tag }}</text>
+          </uni-card>
+        </navigator>
+      </view>
       <view v-show="current === 1" v-for="item in juniorSchool" :key="item.id">
         <navigator :url="'./introduce-teacher?id='+item.id">
           <uni-card :title="item.title" :sub-title="item['cource']" :extra="'好评率'+item['feedback_rate']"
                     :thumbnail="item.img">
-            <text>{{item.tag}}</text>
+            <text>{{ item.tag }}</text>
           </uni-card>
         </navigator>
       </view>
@@ -69,7 +69,7 @@
         <navigator :url="'./introduce-teacher?id='+item.id">
           <uni-card :title="item.title" :sub-title="item['cource']" :extra="'好评率'+item['feedback_rate']"
                     :thumbnail="item.img">
-            <text>{{item.tag}}</text>
+            <text>{{ item.tag }}</text>
           </uni-card>
         </navigator>
       </view>
@@ -80,36 +80,26 @@
       <icon class="iconfont icon-jiachangguanli"/>
       家长天地
     </h3>
-      <view class="home-parent-world-main" v-for="item in primarySchool" :key="item.id">
-        <navigator :url="'./parent-world?id='+item.id">
-        <dl class="flex" >
-          <dt>
-            <img :src="item.img" style="width: 160px;height: 120px;border-radius: 5px"/>
-          </dt>
-          <dd>
-            <span class="multipleLine" style="height: 42px">{{item['cource']}}</span>
-            <p>
-              <img style="width: 40px; height: 40px;border-radius: 50%;vertical-align: middle;margin-right: 5px"
-                      :src="item.img"/>
-              <span>{{item.title}}</span><span>{{item['period_fee']}}<b>阅读</b></span>
-            </p>
-          </dd>
-        </dl>
-        </navigator>
-      </view>
+    <view v-for="item in primarySchool" :key="item.id">
+    <navigator :url="'./parent-world?id='+item.id">
+      <uni-list-item :title="item.cource" :note="item.title" :thumb="item.img"
+                     thumb-size="lg" :rightText="item.period_fee+'阅读'"
+                     class="home-parent-world-main"/>
+    </navigator>
+    </view>
   </view>
   <view class="home-works">
     <h3>
       <icon class="iconfont icon-youxiuzuopin"/>
       优秀作品
     </h3>
-      <view class="flex justify-content-center" v-for="item in primarySchool" :key="item.id">
-        <navigator :url="'./works?id='+item.id">
-          <uni-card :cover="item.img">
-            <text class="flex justify-content-center">{{item.title}}</text>
-          </uni-card>
-        </navigator>
-      </view>
+    <view class="flex justify-content-center" v-for="item in primarySchool" :key="item.id">
+      <navigator :url="'./works?id='+item.id">
+        <uni-card :cover="item.img">
+          <text class="flex justify-content-center">{{ item.title }}</text>
+        </uni-card>
+      </navigator>
+    </view>
   </view>
   <view class="home-match">
     <h3>
@@ -127,13 +117,14 @@
   </view>
 </template>
 <script>
-import {onMounted, ref, reactive, toRefs,computed} from 'vue';
+import {onMounted, ref, reactive, toRefs, computed} from 'vue';
 import store from "@/store";
 import {introduceTeacher} from "@/api/home.js";
 import {useAddressParams} from "@/composables/useAddressParams.js";
+
 export default {
   setup() {
-    const {curRouteH,curRouteApp} = useAddressParams();
+    const {curRouteH, curRouteApp} = useAddressParams();
     const teacherData = reactive({
       highSchool: [],
       juniorSchool: [],
@@ -150,7 +141,7 @@ export default {
       duration: 500
     })
     const cityParams = reactive({
-      code: '' ,
+      code: '',
       name: ''
     })
     onMounted(() => {
@@ -168,12 +159,16 @@ export default {
         url: `/pages/city/index?code=${cityParams.code}&name=${cityParams.name}`
       })
     }
-    const getTeacher = async() => {
-       const {data:data} = await introduceTeacher();
-       const {high_school,junior_school,primary_school} = data[0]
-       teacherData.primarySchool = primary_school
-       teacherData.juniorSchool = junior_school
-       teacherData.highSchool = high_school
+    const getTeacher = async () => {
+      uni.showLoading({
+        title: '加载中'
+      })
+      const {data: data} = await introduceTeacher();
+      uni.hideLoading();
+      const {high_school, junior_school, primary_school} = data[0]
+      teacherData.primarySchool = primary_school
+      teacherData.juniorSchool = junior_school
+      teacherData.highSchool = high_school
     }
     const selectTeacher = (e) => {
       if (teacherList.current != e.currentIndex) {
@@ -227,7 +222,7 @@ export default {
   }
 }
 
-.home-know, .home-introduce-teacher, .home-parent-world, .home-parent-world-main, .home-works, .home-match,.segmented-control {
+.home-know, .home-introduce-teacher, .home-parent-world, .home-parent-world-main, .home-works, .home-match, .segmented-control {
   width: 95%;
   margin: auto;
 
@@ -259,19 +254,23 @@ export default {
       p {
         margin-top: 17px;
       }
+
       span {
         font-size: 14px;
-        b{
+
+        b {
           margin-left: 5px;
         }
       }
     }
   }
 }
+
 .home-match {
   margin-bottom: 10px;
 }
-.home-banner,.home-match {
+
+.home-banner, .home-match {
   img {
     width: 100%;
   }

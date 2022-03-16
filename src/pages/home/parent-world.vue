@@ -10,6 +10,7 @@
                 thumbnail="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png">
         <text>这是一个带头像和双标题的基础卡片，此示例展示了一个完整的卡片。</text>
       </uni-card>
+      <uni-card cover="https://yan.zxx1359.top/chenmi/assets/img/banner.786d0e93.jpg">
         <img src="https://yan.zxx1359.top/chenmi/assets/img/banner.786d0e93.jpg" alt="">
         <text>
           大家好，今天给大家讲一下，我家孩子沉迷手机、网络游戏、厌学、成绩差、三天俩头说不想上学了，我是怎么解决的。
@@ -28,26 +29,50 @@
           <img src="https://yan.zxx1359.top/chenmi/assets/img/c3.60caec87.jpg" alt="">
           大概指导了20多天吧，孩子就像变了一个人似的，自己主动跟我说要去上学了，遇到不会的题，还主动问老师了。学校老师也感觉到了孩子的变化，班主任还专门跟我打电话：问了孩子是怎么纠正的，电话里还表扬了我，说我最近孩子教育的好，孩子改变很大！
           后面继续按老师指导的调节，孩子学习态度越来越好，成绩也是直线上升，考试居然还得奖了，我自己都很意外！
-          孩子学习成绩好了，也不玩手机、沉迷游戏了，一家人都很开心，真是可怜天下父母心。只是，希望孩子今后学习上能赶的上同级的就行，最好能考上理想的高中。也不负我对他的一番苦心！也希望看到的家长孩子也尽快好起来！谢谢。
+          孩子学习成绩好
+          了，也不玩手机、沉迷游戏了，一家人都很开心，真是可怜天下父母心。只是，希望孩子今后学习上能赶的上同级的就行，最好能考上理想的高中。也不负我对他的一番苦心！也希望看到的家长孩子也尽快好起来！谢谢。
         </text>
+      </uni-card>
+      <h3>评论列表：</h3>
+     <view v-if="listData.length>0">
+       <uni-list-item v-for="(item,index) in listData" :key="index" :title="item['name']" :note="item['description']" :thumb="item['img']"
+                      thumb-size="lg" :rightText="item['time']"/>
+     </view>
+      <view v-else>
+          这里没有评论哦～
+      </view>
     </view>
-    <view class="parent-world-bottom flex">
-      <uni-search-bar :radius="100" v-model="contentText" placeholder="想说点什么？" class="parent-world-search"/>
-      <button type="default" @click="sendText" class="parent-world-button">发送</button>
+  </view>
+  <view class="comment-btn flex" v-if="comment">
+    <uni-easyinput v-model="commentText" placeholder="请输入内容" />
+    <button type="default" @click="handleComment">评论</button>
+  </view>
+  <view slot="actions" class="card-actions flex justify-content-center" v-else>
+    <view class="card-actions-item" @click="actionsClick('分享')">
+      <uni-icons type="pengyouquan" size="18" color="#999"></uni-icons>
+      <text class="card-actions-item-text">分享</text>
     </view>
-
+    <view class="card-actions-item" @click="actionsClick('点赞')">
+      <uni-icons type="heart" size="18" color="#999" :class="giveThumbsUp ? 'thumbs-active':'uni-icon-heart'"></uni-icons>
+      <text class='card-actions-item-text'>点赞</text>
+    </view>
+    <view class="card-actions-item" @click="actionsClick('评论')">
+      <uni-icons type="chatbubble" size="18" color="#999"></uni-icons>
+      <text class="card-actions-item-text">评论</text>
+    </view>
   </view>
 </template>
 <script>
-import {reactive, ref, toRefs} from "vue";
-
+import {reactive, ref, toRefs,shallowReactive} from "vue";
+import {transformTime} from '@/utils/time.js';
 export default {
   setup() {
-    const scrollData = reactive({
-      scrollTop: 0,
-      old: {
-        scrollTop: 0
-      }
+    const commentList = reactive({
+      listData: [],
+      commentText: '',//评论内容
+      listText: '',//
+      giveThumbsUp: false, //是否点赞
+      comment: false //是否评论
     })
     const onPullDownRefresh = () =>{
       console.log('refresh');
@@ -55,16 +80,61 @@ export default {
         uni.stopPullDownRefresh();
       }, 1000);
     }
+    const actionsClick = (params) => {
+      switch (params){
+        case '分享':
+          handleShare();
+          break;
+        case '点赞':
+          commentList.giveThumbsUp = !commentList.giveThumbsUp;
+          break;
+        case '评论':
+          commentList.commentText = '';
+          commentList.comment = !commentList.comment
+          break;
+        default:
+          break;
+      }
+    }
+    const handleComment = () => {
+      commentList.listText = commentList.commentText
+      commentList.comment = !commentList.comment
+      commentList.listData.push({
+          name: 'wky',
+          description: commentList.listText,
+          time: transformTime(new Date()),
+          img: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/d8590190-4f28-11eb-b680-7980c8a877b8.png'
+      })
+    }
+    const  handleShare = () =>{
+      uni.share({
+        provider: "weixin",
+        scene: "WXSceneSession",
+        type: 0,
+        href: "http://uniapp.dcloud.io/",
+        title: "uni-app分享",
+        summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+        imageUrl: "https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/d8590190-4f28-11eb-b680-7980c8a877b8.png",
+        success: function (res) {
+          console.log("success:" + JSON.stringify(res));
+        },
+        fail: function (err) {
+          console.log("fail:" + JSON.stringify(err));
+        }
+      });
+    }
     return {
-      ...toRefs(scrollData),
       onPullDownRefresh,
-      scroll
+      actionsClick,
+      handleComment,
+      ...toRefs(commentList),
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 .parent-world-wrap {
+  padding-bottom: 40px;
   h3 {
     margin: 15px 0;
     text-align: center;
@@ -74,33 +144,52 @@ export default {
     width: 95%;
     margin: auto;
     color: #6a6a6a;
-
+    h3 {
+      text-align: left;
+    }
+  ::v-deep.uni-card__content {
+      margin-bottom: 30px;
+    }
     img {
       width: 100%;
       height: 100%;
     }
   }
-
-  .parent-world-bottom {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #eeeeee;
-    height: 60px;
-    line-height: 60px;
-
-    .parent-world-search {
-      width: 75%;
-
-      ::v-deep.uniui-search {
-        display: none;
-      }
+}
+.comment-btn {
+  background-color: rgba(0,0,0,0.2);
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  .uni-easyinput {
+    padding: 0 20px;
+   ::v-deep.is-input-border {
+      border: 2px solid #fff;
     }
-
-    .parent-world-button {
-      background-color: #16C4AF;
+    .uni-easyinput__placeholder-class {
       color: #fff;
+    }
+  }
+}
+.card-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0,0,0,.2);
+  color: #fff;
+  padding: 10px 0;
+  z-index: 99;
+  .card-actions-item {
+    padding: 0 15px;
+    .thumbs-active {
+      color: red!important;
+    }
+    .uni-icon-heart {
+      color: rgb(153, 153, 153);
     }
   }
 }

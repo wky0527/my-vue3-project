@@ -1,45 +1,32 @@
 <template>
-   <view class="uni-screen" v-show="isScreen" id="uni-screen">
-      <view class="uni-screen-position flex" v-show="isScreen">
-          <view class="uni-screen-position-left">
-              <p @click="handlePosition(item)" v-for="item in positionName" :key="item.value" :class="{'active':current === item.value}">{{item.label}}</p>
-          </view>
-          <view class="uni-screen-position-right" v-if="current === 0">
-           <view class="flex position">
-             <ul class="position-parent">
-               <li v-for="item in positionData" :key="item.code" @click="positionChildren(item)">
-                  <span :class="{'active':activeList === item.code}">{{item.name}}</span>
-               </li>
-             </ul>
-             <ul v-if="isChildren" class="position-children">
-               <li v-for="item in data">
-                 <span :class="{'active':activeList === item.code}">{{item.name}}</span>
-               </li>
-             </ul>
-           </view>
-             <view class="uni-screen-btn flex">
-                <button class="btn">重置</button>
-                <button class="btn sure">确定</button>
-             </view>
-          </view>
-        <view class="uni-screen-position-right" v-else-if="current === 1">
-          <ul>
-            <li v-for="item in positionData" :key="item.code">{{item.name}}</li>
-          </ul>
-        </view>
+<!--  <view id="uni-screen" v-show="isScreen"></view>-->
+  <view class="uni-screen-position flex" v-if="controlType === 'picker'" v-show="showTree">
+    <view class="uni-screen-position-left">
+      <p @click="handlePosition(item)" v-for="item in positionName" :key="item.value"
+         :class="{'active':current === item.value}">{{ item.label }}</p>
+    </view>
+    <view class="uni-screen-position-right" v-if="current === 0">
+      <view class="position">
+        <tree :tree-data="positionData" ref="childTree" :tree-name="positionName" @treeVal="getTree"/>
       </view>
-<!--     <view class="uni-screen-position" v-else-if="controlType === 'tabs'">-->
-<!--         tabs-->
-<!--     </view>-->
-<!--     <view v-else-if="controlType === 'select'">-->
-<!--        select-->
-<!--     </view>-->
-   </view>
+      <view class="uni-screen-btn flex">
+        <button class="btn" size="mini" @click="handleReset">重置</button>
+        <button class="btn sure" size="mini" @click="handleSure">确定</button>
+      </view>
+    </view>
+  </view>
+  <!--     <view class="uni-screen-position" v-else-if="controlType === 'tabs'">-->
+  <!--         tabs-->
+  <!--     </view>-->
+  <!--     <view v-else-if="controlType === 'select'">-->
+  <!--        select-->
+  <!--     </view>-->
 </template>
 <script>
-import {reactive,toRefs} from "vue";
-
+import {reactive, toRefs,ref,provide} from "vue";
+import Tree from './uni-tree.vue';
 export default {
+  components: {Tree},
   props: {
     positionName: {
       type: Array
@@ -49,94 +36,98 @@ export default {
     },
     positionData: {
       type: Array
+    },
+    showTree:{
+      type: Boolean
     }
   },
-  setup(props,{emit}){
-    document.addEventListener('click',e=>{
-      if(document.getElementById('uni-screen').contains(e.target)){
-        positionConfig.isScreen = false
-      }else{
-        positionConfig.isScreen = true
-      }
-    })
+  setup(props, {emit}) {
+   // document.addEventListener('click', e => {
+   //  if (document.getElementById('uni-screen').contains(e.target)) {
+   //  positionConfig.isScreen = false
+   //     } else {
+   //     positionConfig.isScreen = true
+   //   }
+   //   })
+
     const positionConfig = reactive({
-      current:0,
-      isChildren: false,
-      activeList: 0,
-      isScreen: false
+      current: 0
     })
-    const childPosition = reactive(({
-      data:[]
-    }))
-    const handlePosition = (params) =>{
-       positionConfig.current = params.value;
+    const getTreeVal = reactive({
+       treeVal: {}
+    })
+    const handlePosition = (params) => {
+      positionConfig.current = params.value;
     }
-    const positionChildren = (params) =>{
-         positionConfig.activeList = params.code
-      if(params.children){
-         positionConfig.isChildren = true
-         params.children.filter(item=>{
-          return  item.code === params.code
-        })
-         childPosition.data = params.children;
-      }else {
-        positionConfig.isChildren = false
-      }
+    const handleReset = () => {
+
+    }
+    const handleSure = () => {
+      emit('receiveTreeParams',{...getTreeVal.treeVal,showTree:false})
+    }
+    const getTree = (value) =>{
+      getTreeVal.treeVal = value;
     }
     return {
+      handleReset,
+      handleSure,
       handlePosition,
-      positionChildren,
-      ...toRefs(positionConfig),
-      ...toRefs(childPosition)
+      getTree,
+      getTreeVal,
+      ...toRefs(positionConfig)
     }
   }
 }
+
 </script>
 <style lang="scss" scoped>
-.uni-screen {
+#uni-screen {
   position: absolute;
   top: 43px;
   left: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100%;
   z-index: 99;
-  .uni-screen-position {
-    background-color: #fff;
-    align-items: inherit;
-    width: max-content;
-    .uni-screen-position-left {
-      background-color: #ececec;
-      padding: 10px 25px;
-      p {
-        margin: 20px auto;
-      }
-      .active {
-        color: #16C4AF;
-        border-bottom: 2px solid #16C4AF;
-      }
+}
+
+.uni-screen-position {
+  background-color: #fff;
+  align-items: inherit;
+  width: 100%;
+  //max-height: 500px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  z-index: 100;
+  overflow: hidden;
+
+  .uni-screen-position-left {
+    background-color: #ececec;
+    padding: 10px 25px;
+
+    p {
+      margin: 20px auto;
+      width: max-content;
     }
-    .uni-screen-position-right {
-      .position {
-        align-items: inherit;
-        .position-parent {
-          .active {
-            color: #16C4AF;
-            border-bottom: 2px solid #16C4AF;
-          }
-        }
-      }
-      ul {
-        li {
-          padding: 15px 25px;
-          border-right: 1px solid #EDEDED;
-        }
-      }
+
+    .active {
+      color: #16C4AF;
+      border-bottom: 2px solid #16C4AF;
     }
+  }
+
+  .uni-screen-position-right {
+    width: 100%;
+    overflow: scroll;
     .uni-screen-btn {
-       .btn {
-         margin: 0 10px;
-       }
+      position: sticky;
+      bottom: 75px;
+      right: 0;
+      float: right;
+      .btn {
+        margin: 0 10px;
+      }
       .sure {
         background-color: #16C4AF;
         color: #fff;
@@ -144,4 +135,5 @@ export default {
     }
   }
 }
+
 </style>

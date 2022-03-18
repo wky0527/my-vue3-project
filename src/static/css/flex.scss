@@ -11,6 +11,9 @@
     &.justify-content-spacebetween {
         justify-content: space-between;
     }
+    &.justify-content-end {
+      justify-content: end;
+    }
     &.wrap {
         flex-wrap: wrap;
     }

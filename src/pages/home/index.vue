@@ -77,15 +77,15 @@
   </view>
   <view class="home-parent-world">
     <h3>
-      <icon class="iconfont icon-jiachangguanli"/>
+      <icon class="iconfont icon-youxiuzuopin"/>
       家长天地
     </h3>
-    <view v-for="item in primarySchool" :key="item.id">
-    <navigator :url="'./parent-world?id='+item.id">
-      <uni-list-item :title="item.cource" :note="item.title" :thumb="item.img"
-                     thumb-size="lg" :rightText="item.period_fee+'阅读'"
-                     class="home-parent-world-main"/>
-    </navigator>
+    <view class="flex justify-content-center" v-for="item in primarySchool" :key="item.id">
+      <navigator :url="'./parents-world?id='+item.id">
+        <uni-card :cover="item.img">
+          <text class="flex justify-content-center">{{ item.title }}</text>
+        </uni-card>
+      </navigator>
     </view>
   </view>
   <view class="home-works">

@@ -6,17 +6,19 @@
           <icon class="iconfont icon-xiangxia"/>
         </span>
     </view>
-    <uni-screen :positionName="positionName" :controlType="type" :positionData="positionData"/>
+    <Screen :positionName="positionName" :controlType="type" :positionData="positionData" @receiveTreeParams="receiveTreeParams" :showTree="showTree"/>
     <uni-list-item :title="item.title" :note="item.description" :thumb="item.img" thumb-size="lg" :rightText="item.rightText" v-for="item in list"/>
   </view>
 </template>
 <script>
-import {reactive, shallowReactive, toRefs,ref} from "vue";
+import {reactive, shallowReactive, toRefs,ref,provide,watch} from "vue";
 import {transformTime} from '@/utils/time';
+import Screen from '@/components/uni-screen/uni-screen';
 export default {
+  components:{Screen},
   setup(){
     const screenData = shallowReactive({
-       screenName: [
+       screenName:[
          {
            value: 0,
            label: '位置'
@@ -35,6 +37,7 @@ export default {
          },
        ],
        current: 0,
+       showTree: false
     })
     const type = ref('');
     const positionData = shallowReactive({
@@ -47,7 +50,19 @@ export default {
             {
               parentCode: 1000,
               code: 1100,
-              name: '灯市口'
+              name: '灯市口',
+              children:[
+                {
+                  parentCode: 1100,
+                  code: 1110,
+                  name: '测试',
+                },
+                {
+                  parentCode: 1100,
+                  code: 1111,
+                  name: '测试1',
+                }
+              ]
             },
             {
               parentCode: 1000,
@@ -90,7 +105,72 @@ export default {
         {
           code: 1007,
           name: '昌平'
-        }
+        },
+        {
+          code: 1006,
+          name: '朝阳'
+        },
+        {
+          code: 1007,
+          name: '昌平'
+        },
+        {
+          code: 1006,
+          name: '朝阳'
+        },
+        {
+          code: 1007,
+          name: '昌平'
+        },
+        {
+          code: 1006,
+          name: '朝阳'
+        },
+        {
+          code: 1007,
+          name: '昌平'
+        },
+        {
+          code: 1006,
+          name: '朝阳'
+        },
+        {
+          code: 1007,
+          name: '昌平'
+        },
+        {
+          code: 1002,
+          name: '朝阳',
+          children: [
+            {
+              parentCode: 1002,
+              code: 1102,
+              name: '来广营'
+            }
+          ]
+        },
+        {
+          code: 1002,
+          name: '朝阳',
+          children: [
+            {
+              parentCode: 1002,
+              code: 1102,
+              name: '来广营'
+            }
+          ]
+        },
+        {
+          code: 1002,
+          name: '朝阳',
+          children: [
+            {
+              parentCode: 1002,
+              code: 1102,
+              name: '来广营'
+            }
+          ]
+        },
       ]
     })
     const listData = shallowReactive({
@@ -123,6 +203,7 @@ export default {
     })
     const handleNameClick  = (params)=>{
       screenData.current = params.value
+      screenData.showTree = true;
        switch (params.value){
          case 0:
                type.value = 'picker'
@@ -137,11 +218,19 @@ export default {
            break;
        }
     }
+    const positionVal = ref('')
+   const receiveTreeParams = (params) =>{
+     const {name,code,showTree} = params
+     screenData.showTree = showTree;
+     positionVal.value = name
+   }
     return {
       ...toRefs(screenData),
       ...toRefs(positionData),
       ...toRefs(listData),
+      positionVal,
       handleNameClick,
+      receiveTreeParams,
       type
     }
   }

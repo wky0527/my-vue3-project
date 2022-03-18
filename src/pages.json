@@ -68,17 +68,16 @@
       }
     },
     {
-      "path": "pages/home/parent-world",
-      "style": {
-        "navigationBarTitleText": "家长天地",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
       "path": "pages/home/works",
       "style": {
         "navigationBarTitleText": "优秀作品",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/home/parents-world",
+      "style": {
+        "navigationBarTitleText": "家长天地",
         "navigationStyle": "custom"
       }
     },

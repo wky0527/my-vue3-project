@@ -10,6 +10,9 @@
         "usingComponents" : true,
         "nvueStyleCompiler" : "uni-app",
         "compilerVersion" : 3,
+        "compatible" : {
+            "ignoreVersion" : true
+        },
         "splashscreen" : {
             "alwaysShowBeforeRender" : true,
             "waiting" : true,
@@ -62,10 +65,6 @@
                     "weixin" : {
                         "appid" : "__UNI__E01C009",
                         "UniversalLinks" : "https://static-763e865c-8b9f-42cc-9737-3adfb72d4147.bspapp.com/uni-universallinks/__UNI__E01C009/"
-                    },
-                    "qq" : {
-                        "appid" : "",
-                        "UniversalLinks" : ""
                     }
                 },
                 "oauth" : {}

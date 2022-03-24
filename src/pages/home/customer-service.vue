@@ -65,7 +65,7 @@ export default {
       send()
       uni.onSocketError(function (err){
         console.log('websocket连接失败，请检查')
-        websocketConfig.socketTask = null;
+        wwebsocketConfig.socketTask = null;
         websocketConfig.isOpenSocket = false;
         clearInterval(websocketConfig.heartbeatInterval)
         clearInterval(websocketConfig.reconnectTimeOut)

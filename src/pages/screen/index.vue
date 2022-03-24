@@ -8,14 +8,16 @@
     </view>
     <Screen :positionName="positionName" :controlType="type" :positionData="positionData" @receiveTreeParams="receiveTreeParams" :showTree="showTree"/>
     <uni-list-item :title="item.title" :note="item.description" :thumb="item.img" thumb-size="lg" :rightText="item.rightText" v-for="item in list"/>
+    <cascader-select :list="positionData"></cascader-select>
   </view>
 </template>
 <script>
 import {reactive, shallowReactive, toRefs,ref,provide,watch} from "vue";
 import {transformTime} from '@/utils/time';
 import Screen from '@/components/uni-screen/uni-screen';
+import cascaderSelect from '@/components/mayh-cascader/mayh-cascader.vue'
 export default {
-  components:{Screen},
+  components:{Screen,cascaderSelect},
   setup(){
     const screenData = shallowReactive({
        screenName:[
@@ -44,130 +46,36 @@ export default {
       positionName: [{label:'商圈',value:0},{label:'地铁',value:1}],
       positionData:[
         {
-          code: 1000,
-          name: '东城',
+          value: 1000,
+          label: '东城',
           children: [
             {
-              parentCode: 1000,
-              code: 1100,
-              name: '灯市口',
+              value: 1100,
+              label: '灯市口',
               children:[
                 {
-                  parentCode: 1100,
-                  code: 1110,
-                  name: '测试',
+                  value: 1110,
+                  label: '测试',
                 },
                 {
-                  parentCode: 1100,
-                  code: 1111,
-                  name: '测试1',
+                  value: 1111,
+                  label: '测试1',
                 }
               ]
             },
             {
-              parentCode: 1000,
-              code: 1101,
-              name: '东单'
+              value: 1101,
+              label: '东单'
             }
           ]
         },
         {
-          code: 1001,
-          name: '西城'
-        },
-        {
-          code: 1002,
-          name: '朝阳',
+          value: 1002,
+          label: '朝阳',
           children: [
             {
-              parentCode: 1002,
-              code: 1102,
-              name: '来广营'
-            }
-          ]
-        },
-        {
-          code: 1003,
-          name: '昌平'
-        },
-        {
-          code: 1004,
-          name: '东城'
-        },
-        {
-          code: 1005,
-          name: '西城'
-        },
-        {
-          code: 1006,
-          name: '朝阳'
-        },
-        {
-          code: 1007,
-          name: '昌平'
-        },
-        {
-          code: 1006,
-          name: '朝阳'
-        },
-        {
-          code: 1007,
-          name: '昌平'
-        },
-        {
-          code: 1006,
-          name: '朝阳'
-        },
-        {
-          code: 1007,
-          name: '昌平'
-        },
-        {
-          code: 1006,
-          name: '朝阳'
-        },
-        {
-          code: 1007,
-          name: '昌平'
-        },
-        {
-          code: 1006,
-          name: '朝阳'
-        },
-        {
-          code: 1007,
-          name: '昌平'
-        },
-        {
-          code: 1002,
-          name: '朝阳',
-          children: [
-            {
-              parentCode: 1002,
-              code: 1102,
-              name: '来广营'
-            }
-          ]
-        },
-        {
-          code: 1002,
-          name: '朝阳',
-          children: [
-            {
-              parentCode: 1002,
-              code: 1102,
-              name: '来广营'
-            }
-          ]
-        },
-        {
-          code: 1002,
-          name: '朝阳',
-          children: [
-            {
-              parentCode: 1002,
-              code: 1102,
-              name: '来广营'
+              value: 1102,
+              label: '来广营'
             }
           ]
         },
@@ -219,7 +127,7 @@ export default {
        }
     }
     const positionVal = ref('')
-   const receiveTreeParams = (params) =>{
+    const receiveTreeParams = (params) =>{
      const {name,code,showTree} = params
      screenData.showTree = showTree;
      positionVal.value = name

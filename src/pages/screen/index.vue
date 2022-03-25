@@ -6,18 +6,14 @@
           <icon class="iconfont icon-xiangxia"/>
         </span>
     </view>
-    <Screen :positionName="positionName" :controlType="type" :positionData="positionData" @receiveTreeParams="receiveTreeParams" :showTree="showTree"/>
+    <uni-screen :positionName="positionName" :controlType="type" :options="positionData" @optionsValue="receiveParams" :showTree="showTree"/>
     <uni-list-item :title="item.title" :note="item.description" :thumb="item.img" thumb-size="lg" :rightText="item.rightText" v-for="item in list"/>
-    <cascader-select :list="positionData"></cascader-select>
   </view>
 </template>
 <script>
 import {reactive, shallowReactive, toRefs,ref,provide,watch} from "vue";
 import {transformTime} from '@/utils/time';
-import Screen from '@/components/uni-screen/uni-screen';
-import cascaderSelect from '@/components/mayh-cascader/mayh-cascader.vue'
 export default {
-  components:{Screen,cascaderSelect},
   setup(){
     const screenData = shallowReactive({
        screenName:[
@@ -127,10 +123,11 @@ export default {
        }
     }
     const positionVal = ref('')
-    const receiveTreeParams = (params) =>{
+    const receiveParams = (params) =>{
      const {name,code,showTree} = params
      screenData.showTree = showTree;
      positionVal.value = name
+      console.log(params)
    }
     return {
       ...toRefs(screenData),
@@ -138,7 +135,7 @@ export default {
       ...toRefs(listData),
       positionVal,
       handleNameClick,
-      receiveTreeParams,
+      receiveParams,
       type
     }
   }

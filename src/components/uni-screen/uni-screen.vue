@@ -6,11 +6,9 @@
          :class="{'active':current === item.value}">{{ item.label }}</p>
     </view>
     <view class="uni-screen-position-right" v-if="current === 0">
-      <view class="position" v-for="(item,index) in positionData" :key="index">
-            <span @click="changeTree(item,index)">{{item.name}}</span>
-<!--        <tree :tree-data="positionData" ref="childTree" :tree-name="positionName" @treeVal="getTree"/>-->
-            <view>
-               <tree :treeItem="item.children" />
+      <view class="position-parent" v-for="(options,columnIndex) in optionsList" :key="columnIndex">
+           <view v-for="(item,index) in options" :key="index" @tap="handleSelect(item,columnIndex)" :class="{'active': selectedValue[columnIndex] === item.value}" class="position-children">
+              <text>{{item.label}}</text>
            </view>
       </view>
       <view class="uni-screen-btn flex">
@@ -27,10 +25,8 @@
   <!--     </view>-->
 </template>
 <script>
-import {reactive, toRefs,ref,provide} from "vue";
-import Tree from './uni-tree.vue';
+import {reactive, toRefs, onMounted} from "vue";
 export default {
-  components: {Tree},
   props: {
     positionName: {
       type: Array
@@ -38,68 +34,95 @@ export default {
     controlType: {
       type: String
     },
-    positionData: {
-      type: Array
+    value: {
+      type: Array,
+      default(){
+        return []
+      }
+    },
+    //选项数据
+    options: {
+      type: Array,
+      default(){
+        return []
+      }
     },
     showTree:{
       type: Boolean
     }
   },
   setup(props, {emit}) {
-    const isOpen = ref(false);
-   // document.addEventListener('click', e => {
-   //  if (document.getElementById('uni-screen').contains(e.target)) {
-   //  positionConfig.isScreen = false
-   //     } else {
-   //     positionConfig.isScreen = true
-   //   }
-   //   })
-
-    const childTree = ref()
-    const positionData = reactive(props.positionData)
+    // document.addEventListener('click', e => {
+    // if (document.getElementById('uni-screen').contains(e.target)) {
+    // positionConfig.isScreen = false
+    //    } else {
+    //    positionConfig.isScreen = true
+    //  }
+    //  })
+    const options = reactive({
+      optionsList:[],//数据
+      selectedValue:[],//选中的数据
+    })
+    const propOptions = reactive(props.options)
+    const value = reactive(props.value)
     const positionConfig = reactive({
       current: 0
     })
-    const clickItem = reactive({
-      clickItem:{}
-    })
-    const getTreeVal = reactive({
-       treeVal: {}
-    })
-    const changeTree = (item,index)=>{
-      // isOpen.value = !isOpen.value
-
-    }
     const handlePosition = (params) => {
       positionConfig.current = params.value;
     }
+    //重置事件
     const handleReset = () => {
-      childTree.value.resetData()
+      options.selectedValue = []
+      options.optionsList.splice(1,2)
     }
+    //确认事件
     const handleSure = () => {
-      emit('receiveTreeParams',{...getTreeVal.treeVal,showTree:false})
+      emit('optionsValue',{...options.selectedValue,showTree:false})
       uni.showToast({
-        title: `提交数据成功+${getTreeVal.treeVal}`
+        title: `提交数据成功`
       })
-
     }
-    const getTree = (value) =>{
-      getTreeVal.treeVal = value;
-    }
+    //遮罩点击事件（兼容app）
     const hideDrawer = () =>{
-      emit('receiveTreeParams',{...getTreeVal.treeVal,showTree:false})
+      emit('optionsValue',{...options.selectedValue,showTree:false})
     }
+    //级联一级菜单渲染
+    const handleValue = (val) =>{
+       options.selectedValue = []
+       options.optionsList = getOptionsList(val,propOptions)
+       options.selectedValue = val
+    }
+    //级联多级菜单递归
+    const getOptionsList = (values,options,currentList = []) =>{
+      currentList.push(options)
+      if(!options || options.length === 0) return currentList;
+      if (values.length === 0) return currentList
+      return getOptionsList(...currentList)
+    }
+    //级联选中事件
+    const handleSelect = (item,columnIndex) =>{
+      const selectedValue = options.selectedValue.slice(0,columnIndex)
+      const optionsList = options.optionsList.slice(0,columnIndex+1)//[[]]
+      selectedValue.splice(columnIndex,1,item.value)
+      options.selectedValue = selectedValue;
+      if(item.children) optionsList.splice(columnIndex+1,1,item.children)
+      options.optionsList = optionsList;
+    }
+    onMounted(()=>{
+      handleValue(value)
+    })
     return {
-      childTree,
       handleReset,
       handleSure,
       handlePosition,
-      getTree,
-      getTreeVal,
       hideDrawer,
-      changeTree,
-      clickItem,
-      isOpen,
+      handleValue,
+      getOptionsList,
+      propOptions,
+      value,
+      handleSelect,
+      ...toRefs(options),
       ...toRefs(positionConfig)
     }
   }
@@ -145,10 +168,16 @@ export default {
   .uni-screen-position-right {
     width: 100%;
     overflow: scroll;
-    .position {
-      padding-left: 20px;
-      align-items: inherit;
-    }
+      .position-parent {
+        float: left;
+        border-right: 1px solid #EDEDED;
+        .position-children {
+          padding: 10px 20px;
+        }
+        .active {
+          color: #16C4AF;
+        }
+      }
     .uni-screen-btn {
       position: absolute;
       right: 0;

@@ -87,7 +87,13 @@
         "navigationBarTitleText": "更多赛事",
         "navigationStyle": "custom"
       }
-     }
+     },
+    {
+      "path": "pages/test/parent",
+      "style": {
+        "navigationBarTitleText": "测试"
+      }
+    }
     ],
   "tabBar": {
     "color": "#7A7E83",
@@ -128,6 +134,12 @@
         "iconPath": "static/images/wode_1.png",
         "selectedIconPath": "static/images/wode.png",
         "text": "我的"
+      },
+      {
+        "pagePath": "pages/test/parent",
+        "iconPath": "static/images/yuyue.png",
+        "selectedIconPath": "static/images/yuyue_1.png",
+        "text": "测试"
       }
     ]
   },

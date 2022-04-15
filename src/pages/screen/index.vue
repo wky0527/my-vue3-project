@@ -1,145 +1,107 @@
 <template>
   <view class="screen-wrap">
     <view class="screen-name flex justify-content-spacebetween">
-        <span v-for="item in screenName" :key="item.value" @click="handleNameClick(item)" :class="{'active':current === item.value}">
-            {{item.label}}
+        <span v-for="item in allConfig.screenName" :key="item.value" @click="handleNameClick(item)"
+              :class="{'active':current === item.value}">
+            {{ item.label }}
           <icon class="iconfont icon-xiangxia"/>
         </span>
     </view>
-    <uni-screen :positionName="positionName" :controlType="type" :options="positionData" @optionsValue="receiveParams" :showTree="showTree"/>
-    <uni-list-item :title="item.title" :note="item.description" :thumb="item.img" thumb-size="lg" :rightText="item.rightText" v-for="item in list"/>
+    <uni-screen :positionName="allConfig.positionName" :controlType="type" :showTree="allConfig.showTree" @choosePosition="handleChoose" :currentName="allConfig.current"/>
+    <uni-list-item v-for="item in allConfig.list" :title="item.title" :note="item.description" :thumb="item.img" thumb-size="lg"
+                   :rightText="item.rightText"/>
   </view>
 </template>
-<script>
-import {reactive, shallowReactive, toRefs,ref,provide,watch} from "vue";
+<script setup>
+import {reactive, toRefs, ref, onMounted, provide} from "vue";
 import {transformTime} from '@/utils/time';
-export default {
-  setup(){
-    const screenData = shallowReactive({
-       screenName:[
-         {
-           value: 0,
-           label: '位置'
-         },
-         {
-           value: 1,
-           label: '性别'
-         },
-         {
-           value: 2,
-           label: '价格'
-         },
-         {
-           value: 3,
-           label: '筛选'
-         },
-       ],
-       current: 0,
-       showTree: false
-    })
-    const type = ref('');
-    const positionData = shallowReactive({
-      positionName: [{label:'商圈',value:0},{label:'地铁',value:1}],
-      positionData:[
-        {
-          value: 1000,
-          label: '东城',
-          children: [
-            {
-              value: 1100,
-              label: '灯市口',
-              children:[
-                {
-                  value: 1110,
-                  label: '测试',
-                },
-                {
-                  value: 1111,
-                  label: '测试1',
-                }
-              ]
-            },
-            {
-              value: 1101,
-              label: '东单'
-            }
-          ]
-        },
-        {
-          value: 1002,
-          label: '朝阳',
-          children: [
-            {
-              value: 1102,
-              label: '来广营'
-            }
-          ]
-        },
-      ]
-    })
-    const listData = shallowReactive({
-      list: [
-        {
-          title: 'wky',
-          description: '越努力越幸运',
-          img: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
-          rightText: transformTime(new Date())
-        },
-        {
-          title: 'wky',
-          description: '越努力越幸运',
-          img: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
-          rightText: transformTime(new Date())
-        },
-        {
-          title: 'wky',
-          description: '越努力越幸运',
-          img: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
-          rightText: transformTime(new Date())
-        },
-        {
-          title: 'wky',
-          description: '越努力越幸运',
-          img: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
-          rightText: transformTime(new Date())
-        }
-      ]
-    })
-    const handleNameClick  = (params)=>{
-      screenData.current = params.value
-      screenData.showTree = true;
-       switch (params.value){
-         case 0:
-               type.value = 'picker'
-               break;
-         case 1:
-               type.value = 'tabs'
-               break;
-         case 2:
-               type.value = 'select'
-               break;
-         default:
-           break;
-       }
+
+const type = ref('')
+const allConfig = reactive({
+  screenName: [
+    {
+      value: 0,
+      label: '位置'
+    },
+    {
+      value: 1,
+      label: '性别'
+    },
+    {
+      value: 2,
+      label: '价格'
+    },
+    {
+      value: 3,
+      label: '筛选'
+    },
+  ],
+  current: 0,
+  showTree: false,
+  positionName: [{label: '商圈', value: 0}, {label: '地铁', value: 1}],
+  positionData: [],
+  list: [
+    {
+      title: 'wky',
+      description: '越努力越幸运',
+      img: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
+      rightText: transformTime(new Date())
+    },
+    {
+      title: 'wky',
+      description: '越努力越幸运',
+      img: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
+      rightText: transformTime(new Date())
+    },
+    {
+      title: 'wky',
+      description: '越努力越幸运',
+      img: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
+      rightText: transformTime(new Date())
+    },
+    {
+      title: 'wky',
+      description: '越努力越幸运',
+      img: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
+      rightText: transformTime(new Date())
     }
-    const positionVal = ref('')
-    const receiveParams = (params) =>{
-     const {name,code,showTree} = params
-     screenData.showTree = showTree;
-     positionVal.value = name
-      console.log(params)
-   }
-    return {
-      ...toRefs(screenData),
-      ...toRefs(positionData),
-      ...toRefs(listData),
-      positionVal,
-      handleNameClick,
-      receiveParams,
-      type
-    }
+  ]
+})
+const handleNameClick = (params) => {
+  allConfig.current = params.value
+  allConfig.showTree = true;
+  switch (params.value) {
+    case 0:
+      type.value = 'picker'
+      break;
+    case 1:
+      type.value = 'tag'
+      break;
+    case 2:
+      type.value = 'select'
+      break;
+    default:
+      type.value = 'tag'
+      break;
   }
 }
+const getData = () => {
+  uni.request({
+    url: 'https://yjy-oss-files.oss-cn-zhangjiakou.aliyuncs.com/tuxian/area.json',
+    success: (res) => {
+      allConfig.positionData = res.data
+    }
+  })
+}
+const handleChoose = (params) => {
+  const {name, code, showTree} = params
+  allConfig.showTree = showTree;
+  console.log(params)
+}
+provide('cascaderData', allConfig)
+onMounted(() => {
+  getData()
+})
 </script>
 <style lang="scss" scoped>
 .screen-wrap {
@@ -149,6 +111,7 @@ export default {
     background-color: #EDEDED;
     padding: 10px 15px;
     box-sizing: border-box;
+
     .active {
       color: #16C4AF;
     }

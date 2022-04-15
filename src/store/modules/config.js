@@ -7,6 +7,8 @@ const config = {
     mutations: {
         SET_CONFIGS(state,payload) {
             state.home_banner = payload.home_banner
+            state.screen_type = payload.screen_type
+            state.price_range = payload.price_range
         }
     },
     actions: {

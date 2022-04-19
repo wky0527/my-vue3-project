@@ -8,12 +8,12 @@
         </span>
     </view>
     <uni-screen :positionName="allConfig.positionName" :controlType="type" :showTree="allConfig.showTree" @choosePosition="handleChoose" :currentName="allConfig.current"/>
-    <uni-list-item v-for="item in allConfig.list" :title="item.title" :note="item.description" :thumb="item.img" thumb-size="lg"
+    <uni-list-item v-for="(item,index) in allConfig.list" :title="item.title" :note="item.description" :thumb="item.img" thumb-size="lg" :key=index
                    :rightText="item.rightText"/>
   </view>
 </template>
 <script setup>
-import {reactive, toRefs, ref, onMounted, provide} from "vue";
+import {reactive, ref, onMounted, provide} from "vue";
 import {transformTime} from '@/utils/time';
 
 const type = ref('')
@@ -111,7 +111,9 @@ onMounted(() => {
     background-color: #EDEDED;
     padding: 10px 15px;
     box-sizing: border-box;
-
+    //position: fixed;
+    //left: 0;
+    //top: 50px;
     .active {
       color: #16C4AF;
     }

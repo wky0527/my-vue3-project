@@ -1,39 +1,39 @@
 <template>
   <view id="uni-screen" v-show="showTree" @click="hideDrawer"></view>
-  <view class="uni-screen-position picker flex" v-if="controlType === 'picker'" v-show="showTree">
-    <view class="uni-screen-position-left">
-      <p @click="handlePosition(item)" v-for="item in positionName" :key="item.value"
-         :class="{'active':current === item.value}">{{ item.label }}</p>
-    </view>
-    <view class="uni-screen-position-right flex" v-if="current === 0">
-      <uni-cascader :options="data.positionData" @optionsValue="receiveCascader"/>
-    </view>
-  </view>
-  <view class="uni-screen-position sexTag flex" v-else-if="currentName === 1 && controlType === 'tag'" v-show="showTree">
-    <view v-for="(item,index) in sexTag" :key="item.value" class="uni-screen-tag">
-      <uni-tag :text="item.label" :inverted="inverted" @handleTagClick="handleTagClick(index)"
-               :class="{'active': index === active}"/>
-    </view>
-  </view>
-  <view class="uni-screen-position  flex" v-else-if="controlType === 'select'" v-show="showTree">
-    <uni-select :selectOptions="formatPriceRange(priceRange)" @selectValue="receiveSelect">
-      <template v-slot:right>
-        <icon class="iconfont icon-duihao"/>
-      </template>
-    </uni-select>
-  </view>
-  <view class="uni-screen-position screenTag flex" v-else-if="currentName === 3 && controlType === 'tag'" v-show="showTree">
-     <view v-for="(item,index) in screenTag" :key="item.id" class="uni-screenTag">
-       <h3>{{ item.title }}</h3>
-      <view class="flex">
-        <uni-tag v-for="(items,ind) in item.tag" :key="item.value" :text="items.label" :inverted="inverted"
-                 @handleTagClick="handleTagClick(items.value)" :class="{'active': items.value === active}"/>
-      </view>
+     <view class="uni-screen-position picker " v-if="controlType === 'picker'" v-show="showTree">
+       <view class="uni-screen-position-left">
+         <p @click="handlePosition(item)" v-for="item in positionName" :key="item.value"
+            :class="{'active':current === item.value}">{{ item.label }}</p>
+       </view>
+       <view class="uni-screen-position-right flex" v-if="current === 0">
+         <uni-cascader :options="data.positionData" @optionsValue="receiveCascader"/>
+       </view>
      </view>
-  </view>
+     <view class="uni-screen-position sexTag flex" v-else-if="currentName === 1 && controlType === 'tag'" v-show="showTree">
+       <view v-for="(item,index) in sexTag" :key="item.value" class="uni-screen-tag">
+         <uni-tag :text="item.label" :inverted="inverted" @handleTagClick="handleTagClick(index)"
+                  :class="{'active': index === active}"/>
+       </view>
+     </view>
+     <view class="uni-screen-position  " v-else-if="controlType === 'select'" v-show="showTree">
+       <uni-select :selectOptions="formatPriceRange(priceRange)" @selectValue="receiveSelect">
+         <template v-slot:right>
+           <icon class="iconfont icon-duihao"/>
+         </template>
+       </uni-select>
+     </view>
+     <view class="uni-screen-position screenTag " v-else-if="currentName === 3 && controlType === 'tag'" v-show="showTree">
+       <view v-for="(item,index) in screenTag" :key="item.id" class="uni-screenTag">
+         <h3>{{ item.title }}</h3>
+         <view class="flex">
+           <uni-tag v-for="(items,ind) in item.tag" :key="item.value" :text="items.label" :inverted="inverted"
+                    @handleTagClick="handleTagClick(items.value)" :class="{'active': items.value === active}"/>
+         </view>
+       </view>
+     </view>
 </template>
 <script lang="ts" setup>
-import {inject, defineProps, defineEmits, ref, computed} from "vue";
+import {inject, defineProps, defineEmits, ref, computed, reactive} from "vue";
 import store from "@/store";
 // document.addEventListener('click', e => {
 // if (document.getElementById('uni-screen').contains(e.target)) {
@@ -121,15 +121,19 @@ const receiveSelect = (params) => {
   align-items: inherit;
   width: 100%;
   //height: 500px;
+  max-height: 600px;
   position: absolute;
   left: 0;
   z-index: 99;
-  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
   padding-bottom: 20px;
   .uni-screen-position-left {
     background-color: #ececec;
     padding: 10px 25px;
-
+    position: fixed;
+    left: 0;
+    height: 600px;
     p {
       margin: 20px auto;
       width: max-content;
@@ -143,9 +147,16 @@ const receiveSelect = (params) => {
 
   .uni-screen-position-right {
     width: 100%;
-    overflow: scroll;
+    //overflow: scroll;
     align-items: inherit;
+    position: absolute;
+    left: 90px;
+    top: 0;
   }
+}
+.picker {
+ max-height: inherit;
+  height: 600px;
 }
 
 .sexTag,.screenTag {

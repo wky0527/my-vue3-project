@@ -2,7 +2,7 @@
   <uni-custom-nav-bar
       title="更多赛事"
   />
-  <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Ftuddimgs.oss-cn-hangzhou.aliyuncs.com%2F202002%2FDesign006_nmShC8JhBJ.jpg%3Fx-oss-process%3Dstyle%2Fprev_w_750_h_auto&refer=http%3A%2F%2Ftuddimgs.oss-cn-hangzhou.aliyuncs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1649990087&t=864128af84aba43cc5d446698972f134" alt="">
+  <img :src="img" alt="">
   <view class="match-sign-up flex justify-content-spacebetween">
     <view class="left-num">
         <span>11029</span>人已报名
@@ -12,16 +12,12 @@
     </view>
   </view>
 </template>
-<script>
-export default {
-  setup(){
-    const handleSignUp = () =>{
-      //跳转课程详情页
-    }
-    return {
-      handleSignUp
-    }
-  }
+<script setup>
+import {ref} from 'vue';
+const img = ref('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Ftuddimgs.oss-cn-hangzhou.aliyuncs.com%2F202002%2FDesign006_nmShC8JhBJ.jpg%3Fx-oss-process%3Dstyle%2Fprev_w_750_h_auto&refer=http%3A%2F%2Ftuddimgs.oss-cn-hangzhou.aliyuncs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1649990087&t=864128af84aba43cc5d446698972f134')
+const handleSignUp = () =>{
+  //跳转课程详情页
+
 }
 </script>
 <style scoped lang="scss">

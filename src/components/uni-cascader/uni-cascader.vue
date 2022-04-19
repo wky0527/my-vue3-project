@@ -1,6 +1,6 @@
 <template>
-  <scroll-view scroll-y="true" class="scroll-y">
-    <view class="position-parent" v-for="(optionItem,columnIndex) in allConfig.optionsList" :key="columnIndex">
+  <scroll-view :scroll-top="scrollTopVal" scroll-y="true" class="scroll-Y" @scroll="scroll" style="height: 600px">
+    <view class="position-parent" v-for="(optionItem,columnIndex) in allConfig.optionsList" :key="columnIndex" >
       <view v-for="(item,index) in optionItem" :key="columnIndex" @tap="handleSelect(item,columnIndex)" :class="{'active': allConfig.selectedValue.code === item.code}"
             class="position-children">
         <text class="position-children-text">{{ item.name }}</text>
@@ -13,7 +13,7 @@
   </view>
 </template>
 <script setup>
-import {onMounted, watch, defineProps, reactive, toRefs,defineEmits} from 'vue';
+import {onMounted, watch, defineProps, reactive, toRefs,defineEmits,ref,nextTick} from 'vue';
 const props = defineProps({
   value: {
     type: Array,
@@ -32,6 +32,10 @@ const props = defineProps({
 const allConfig = reactive({
   optionsList: [],//数据
   selectedValue: []//选中的数据
+})
+const scrollTopVal = ref(0)
+const oldScrollTop = reactive({
+  scrollTop: 0
 })
 const {options, value} = toRefs(props)
 const emit = defineEmits(['handleSure'])
@@ -72,6 +76,16 @@ const handleSelect = (item, columnIndex) => {
   allConfig.selectedValue = item;
   if (item.areaList) optionsList.splice(columnIndex + 1, 1, item.areaList)
   allConfig.optionsList = optionsList;
+  if(scrollTopVal.value > 34) {
+    scrollTopVal.value = oldScrollTop.scrollTop;
+    nextTick(()=>{
+      scrollTopVal.value = 0
+    })
+  }
+}
+const scroll = (e) => {
+  const {scrollTop} = e.detail;
+  scrollTopVal.value = scrollTop;
 }
 onMounted(() => {
   handleValue()
@@ -82,7 +96,6 @@ watch(() => options, (val, oldVal) => {
   immediate: true,
   deep: true
 })
-
 </script>
 <style lang="scss" scoped>
 .position-parent {
@@ -112,9 +125,8 @@ watch(() => options, (val, oldVal) => {
 
 .uni-screen-btn {
   position: absolute;
-  right: 0;
-  bottom: 5px;
-  float: right;
+  bottom: 8px;
+  right: 85px;
 
   .btn {
     margin: 0 10px;

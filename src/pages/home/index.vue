@@ -110,7 +110,7 @@
       <swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
               :duration="duration">
         <swiper-item v-for="(item,index) in homeBanner" :key="index">
-          <img class="swiper-item uni-bg-red" :src="item"/>
+          <img class="swiper-item uni-bg-red"  v-lazy="item"/>
         </swiper-item>
       </swiper>
     </navigator>

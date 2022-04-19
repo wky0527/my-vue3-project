@@ -18,5 +18,5 @@ const mounted = (el,binding) => {
     observe.observe(el)
 }
 export function setupLazyDirective(app) {
-    app.directive('lazy', {mounted})
+    app.directive('lazyLoad', {mounted})
 }

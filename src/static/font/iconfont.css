@@ -1,0 +1,83 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3191869 */
+  src: url('iconfont.woff2?t=1650362298512') format('woff2'),
+       url('iconfont.woff?t=1650362298512') format('woff'),
+       url('iconfont.ttf?t=1650362298512') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-tupianjiazaishibai:before {
+  content: "\e642";
+}
+
+.icon-duihao:before {
+  content: "\e609";
+}
+
+.icon-xiangxia:before {
+  content: "\e653";
+}
+
+.icon-zhangshangcaifuyemianshoujiban344:before {
+  content: "\e631";
+}
+
+.icon-xiaochengxu:before {
+  content: "\e619";
+}
+
+.icon-weixinhaoyou:before {
+  content: "\e64b";
+}
+
+.icon-a-9-zuo:before {
+  content: "\e8ce";
+}
+
+.icon-fenxiang:before {
+  content: "\e8b0";
+}
+
+.icon-youxiuzuopin:before {
+  content: "\e66d";
+}
+
+.icon-gengduosaishi:before {
+  content: "\e628";
+}
+
+.icon-jiachangguanli:before {
+  content: "\e672";
+}
+
+.icon-tuijianlaoshiqingkuangbiao:before {
+  content: "\e658";
+}
+
+.icon-kefuzixun:before {
+  content: "\e65a";
+}
+
+.icon-lejiewomen:before {
+  content: "\e60a";
+}
+
+.icon-lejiexiangqing:before {
+  content: "\e65f";
+}
+
+.icon-dingwei1:before {
+  content: "\e615";
+}
+
+.icon-dingwei:before {
+  content: "\e866";
+}
+

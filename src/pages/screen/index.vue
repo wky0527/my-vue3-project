@@ -2,7 +2,7 @@
   <view class="screen-wrap">
     <view class="screen-name flex justify-content-spacebetween">
         <span v-for="item in allConfig.screenName" :key="item.value" @click="handleNameClick(item)"
-              :class="{'active':current === item.value}">
+              :class="{'active':allConfig.current === item.value}">
             {{ item.label }}
           <icon class="iconfont icon-xiangxia"/>
         </span>

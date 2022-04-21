@@ -1,13 +1,21 @@
 @import "./flex.scss";
 @import "./common.scss";
+@import "./reset.scss";
 body {
   //background-color: rgb(241,247,254);
-}
-ul li {
-  list-style: none;
 }
 
 *{
   padding: 0;
   margin: 0;
+}
+.uni-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+.home-banner,.teacher-wrap,.parent-world-wrap,.match-wrap {
+  margin-top: 48px;
 }

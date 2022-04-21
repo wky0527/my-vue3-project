@@ -1,8 +1,10 @@
 <template>
-  <uni-custom-nav-bar
+  <uni-nav-bar
       title="了解编程到家"
       rightIcon="more"
       @clickRight="handleShare"
+      leftIcon="back"
+      @clickLeft="clickLeft"
   />
   <view class="programming-video">
     <video src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
@@ -12,19 +14,14 @@
     <img src="https://t11.baidu.com/it/u=1865801558,158785949&fm=30&app=106&f=JPEG?w=640&h=2543&s=F362BB579BB5701310E1C97F0300C067" alt="">
   </view>
 </template>
-<script>
+<script setup>
 import {useNavBar} from "@/composables/useNavBar.js";
-
-export default {
-  setup(){
-    const {useShare} = useNavBar()
-    const handleShare = () => {
-      useShare()
-    }
-    return {
-      handleShare
-    }
-  }
+const {useShare,useBack} = useNavBar()
+const handleShare = () => {
+  useShare()
+}
+const clickLeft = () => {
+  useBack()
 }
 </script>
 <style lang="scss" scoped>

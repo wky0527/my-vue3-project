@@ -12,7 +12,6 @@
 </template>
 <script setup>
 import Children from './children.vue'
-import Demo from '@/components/olylis-cascader/demo'
 import {ref} from 'vue'
 const name = ref('parent')
 </script>

@@ -30,8 +30,12 @@ export function useNavBar(){
             console.log('分享失败：'+JSON.stringify(e));
         });
     }
+    const useBack = () => {
+        history.back()
+    }
     return {
         useShare,
+        useBack,
        ...toRefs(navBar)
     }
 }

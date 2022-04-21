@@ -1,5 +1,4 @@
 <template>
-  <uni-custom-nav-bar title="选择城市"/>
   <view class="city-position">
     <h3>当前位置</h3>
     <p class="city-position-current">{{ currentPosition }}</p>
@@ -8,63 +7,52 @@
     <h3>热门城市</h3>
     <view class="city-hot-list">
       <ul class="flex wrap">
-          <li @click="selectHotCity(item.code,item.name)" v-for="item in data">{{item.name}}</li>
+          <li @click="selectHotCity(item.code,item.name)" v-for="item in hotCity">{{item.name}}</li>
       </ul>
     </view>
   </view>
   <t-index-address @select="selectCity"/>
 </template>
-<script>
-import {onMounted, reactive, ref, toRefs} from 'vue';
+<script setup>
+import {onMounted,ref} from 'vue';
 import {useAddressParams} from "@/composables/useAddressParams.js";
-
-export default {
-  setup() {
-    const currentPosition = ref('');
-    const hotCity = reactive({
-      data: [
-        {
-          code: 1101,
-          name: '北京'
-        },
-        {
-          code: 4401,
-          name: '广州'
-        },
-        {
-          code: 3101,
-          name: '上海'
-        }
-      ]
-    })
-    const {curRouteApp, curRouteH} = useAddressParams();
-    const selectCity = (data) => {
-      const {code, name, provinceCode, province} = data;
-      uni.reLaunch({
-        url: `/pages/home/index?code=${code}&name=${name}`
-      })
-    }
-    const selectHotCity = (code,name) => {
-      uni.reLaunch({
-        url: `/pages/home/index?code=${code}&name=${name}`
-      })
-    }
-    onMounted(() => {
-      //#ifdef H5
-      currentPosition.value = curRouteH.name
-      //#endif
-      //#ifdef APP-PLUS
-      currentPosition.value = curRouteApp.name
-      // #endif
-    })
-    return {
-      selectCity,
-      currentPosition,
-      ...toRefs(hotCity),
-      selectHotCity
-    }
+const currentPosition = ref('');
+const hotCity = ref([
+  {
+    code: 1101,
+    name: '北京'
+  },
+  {
+    code: 4401,
+    name: '广州'
+  },
+  {
+    code: 3101,
+    name: '上海'
   }
+])
+const {curRouteApp, curRouteH} = useAddressParams();
+const selectCity = (data) => {
+  const {code, name, provinceCode, province} = data;
+  uni.reLaunch({
+    url: `/pages/home/index?code=${code}&name=${name}`
+  })
 }
+const selectHotCity = (code,name) => {
+  uni.reLaunch({
+    url: `/pages/home/index?code=${code}&name=${name}`
+  })
+}
+onMounted(() => {
+  //#ifdef H5
+  const {code,name} = curRouteH
+  currentPosition.value = name
+  //#endif
+  //#ifdef APP-PLUS
+  const {code:curRouteAppCode,name:curRouteAppName} = curRouteApp
+  currentPosition.value = curRouteAppName
+  // #endif
+})
 </script>
 <style lang="scss" scoped>
 .city-position, .city-hot {

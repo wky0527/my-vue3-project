@@ -1,5 +1,5 @@
 <template>
-  <uni-custom-nav-bar title="设置管理"/>
+  <uni-nav-bar title="设置管理"/>
   <uni-list-item
       title="列表左侧带略缩图"
       note="列表描述信息"
@@ -8,25 +8,18 @@
       link/>
    <button type="primary" class="setting-logout" @click="logout">退出登录</button>
 </template>
-<script>
+<script setup>
 import {useStore} from 'vuex';
-export default {
-  setup() {
-    const {dispatch} = useStore()
-    const logout = async () => {
-      try {
-        await dispatch('user/logout')
-        location.reload();
-      }catch (e){
-        uni.showToast({
-          title: '退出登录失败',
-          icon: 'error'
-        })
-      }
-    }
-    return {
-      logout
-    }
+const {dispatch} = useStore()
+const logout = async () => {
+  try {
+    await dispatch('user/logout')
+    location.reload();
+  }catch (e){
+    uni.showToast({
+      title: '退出登录失败',
+      icon: 'error'
+    })
   }
 }
 </script>

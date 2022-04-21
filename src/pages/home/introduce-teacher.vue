@@ -1,6 +1,8 @@
 <template>
-  <uni-custom-nav-bar
-      title="老师详情"
+  <uni-nav-bar
+      :title="navBar.title"
+      :leftIcon="navBar.leftIcon"
+      @clickLeft="clickLeft"
   />
   <view class="teacher-wrap">
     <view class="teacher-basic">
@@ -20,7 +22,7 @@
       </dl>
     </view>
     <view class="teacher-detail">
-      <uni-segmented-control :current="current" :values="content" @clickItem="onClickItem" styleType="button" activeColor="#16C4AF"/>
+      <uni-segmented-control :current="current" :values="teacherData" @clickItem="onClickItem" styleType="button" activeColor="#16C4AF"/>
       <view class="content">
         <view v-show="current === 0">
           <view class="teacher-sign-up flex justify-content-spacebetween">
@@ -35,7 +37,7 @@
         <view v-show="current === 1" class="teacher-user-comment">
           <h3>用户评价</h3>
           <uni-tag text="全部" type="warning"/>
-          <uni-tag :text="item" v-for="item in tag"/>
+          <uni-tag :text="item" v-for="item in tagData"/>
           <uni-collapse accordion>
             <uni-collapse-item thumb="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png">
               <uni-tag text="大神丰富"/>
@@ -51,32 +53,26 @@
     </view>
   </view>
 </template>
-<script>
-import {reactive, shallowReactive, toRefs} from 'vue';
-export default {
-  setup(){
-    const teacherConfig = shallowReactive({
-      content:['介绍', '评价', '课程'],
-      current:0
-    })
-    const tag = shallowReactive({
-      tag:['大神','活泼可爱','神经兮兮']
-    })
-    const onClickItem = (e)=> {
-      if (teacherConfig.current != e.currentIndex) {
-        teacherConfig.current = e.currentIndex;
-      }
-    }
-    const handleSignUp = () =>{
-
-    }
-    return {
-      ...toRefs(teacherConfig),
-      ...toRefs(tag),
-      onClickItem,
-      handleSignUp,
-    }
+<script setup>
+import {reactive,ref} from 'vue';
+import {useNavBar} from "@/composables/useNavBar.js";
+const navBar = reactive({
+  title: '老师详情',
+  leftIcon: 'back',
+})
+const current = ref(0)
+const teacherData = ref(['介绍', '评价', '课程'])
+const tagData = ref(['大神','活泼可爱','神经兮兮'])
+const {useBack} = useNavBar()
+const onClickItem = (e)=> {
+  if (current.value != e.currentIndex) {
+    current.value = e.currentIndex;
   }
+}
+const handleSignUp = () =>{
+}
+const clickLeft = () =>{
+  useBack()
 }
 </script>
 <style lang="scss" scoped>
@@ -104,6 +100,7 @@ export default {
           position: absolute;
           right: 10px;
           background-color: #16C4AF;
+          font-size: 12px;
         }
       }
     }

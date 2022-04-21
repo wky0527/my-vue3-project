@@ -42,8 +42,7 @@
     {
       "path": "pages/city/index",
       "style": {
-        "navigationBarTitleText": "选择城市",
-        "navigationStyle": "custom"
+        "navigationBarTitleText": "选择城市"
       }
     },
     {
@@ -56,8 +55,7 @@
     {
       "path": "pages/home/customer-service",
       "style": {
-        "navigationBarTitleText": "客服咨询",
-        "navigationStyle": "custom"
+        "navigationBarTitleText": "客服咨询"
       }
     },
     {
@@ -131,7 +129,7 @@
       },
       {
         "pagePath": "pages/my/index",
-        "iconPath": "static/images/wode_1.png",
+        "iconPath": "static/images/wode_2.png",
         "selectedIconPath": "static/images/wode.png",
         "text": "我的"
       },

@@ -1,0 +1,128 @@
+{
+  "id": "3191869",
+  "name": "my-vue3-project",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "15726933",
+      "name": "图片加载失败",
+      "font_class": "tupianjiazaishibai",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "21093450",
+      "name": "对号",
+      "font_class": "duihao",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "16647460",
+      "name": "向下",
+      "font_class": "xiangxia",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "178879",
+      "name": "朋友圈",
+      "font_class": "zhangshangcaifuyemianshoujiban344",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "3552293",
+      "name": "小程序",
+      "font_class": "xiaochengxu",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "6234141",
+      "name": "微信好友",
+      "font_class": "weixinhaoyou",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "28075303",
+      "name": "9-左",
+      "font_class": "a-9-zuo",
+      "unicode": "e8ce",
+      "unicode_decimal": 59598
+    },
+    {
+      "icon_id": "11372666",
+      "name": "分享",
+      "font_class": "fenxiang",
+      "unicode": "e8b0",
+      "unicode_decimal": 59568
+    },
+    {
+      "icon_id": "9302927",
+      "name": "优秀作品",
+      "font_class": "youxiuzuopin",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
+    },
+    {
+      "icon_id": "10721382",
+      "name": "更多赛事",
+      "font_class": "gengduosaishi",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "12713046",
+      "name": "家长管理",
+      "font_class": "jiachangguanli",
+      "unicode": "e672",
+      "unicode_decimal": 58994
+    },
+    {
+      "icon_id": "2262894",
+      "name": "推荐老师情况表",
+      "font_class": "tuijianlaoshiqingkuangbiao",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "5590986",
+      "name": "客服、咨询",
+      "font_class": "kefuzixun",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "9651029",
+      "name": "了解我们",
+      "font_class": "lejiewomen",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "17946528",
+      "name": "了解详情",
+      "font_class": "lejiexiangqing",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
+      "icon_id": "4879795",
+      "name": "定位",
+      "font_class": "dingwei1",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "8288977",
+      "name": "定位",
+      "font_class": "dingwei",
+      "unicode": "e866",
+      "unicode_decimal": 59494
+    }
+  ]
+}

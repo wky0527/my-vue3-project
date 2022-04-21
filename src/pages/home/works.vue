@@ -1,7 +1,9 @@
 <template>
-  <uni-custom-nav-bar
+  <uni-nav-bar
       title="优秀作品"
       rightIcon="more"
+      leftIcon="back"
+      @clickLeft="clickLeft"
   />
   <view class="parent-world-wrap">
     <h3>孩子沉迷游戏怎么办？我做了这四点拯救了儿子</h3>
@@ -62,62 +64,56 @@
     </view>
   </view>
 </template>
-<script>
+<script setup>
 import {reactive, ref, toRefs,shallowReactive} from "vue";
 import {transformTime} from '@/utils/time.js';
 import {useNavBar} from "@/composables/useNavBar.js";
-export default {
-  setup() {
-    const commentList = reactive({
-      listData: [],
-      commentText: '',//评论内容
-      listText: '',//
-      giveThumbsUp: false, //是否点赞
-      comment: false //是否评论
-    })
-    const onPullDownRefresh = () =>{
-      console.log('refresh');
-      setTimeout(function () {
-        uni.stopPullDownRefresh();
-      }, 1000);
-    }
-    const actionsClick = (params) => {
-      switch (params){
-        case '分享':
-          handleShare();
-          break;
-        case '点赞':
-          commentList.giveThumbsUp = !commentList.giveThumbsUp;
-          break;
-        case '评论':
-          commentList.commentText = '';
-          commentList.comment = !commentList.comment
-          break;
-        default:
-          break;
-      }
-    }
-    const handleComment = () => {
-      commentList.listText = commentList.commentText
+const commentList = reactive({
+  listData: [],
+  commentText: '',//评论内容
+  listText: '',//
+  giveThumbsUp: false, //是否点赞
+  comment: false //是否评论
+})
+const {listData,commentText,listText,giveThumbsUp,comment} = toRefs(commentList)
+const onPullDownRefresh = () =>{
+  console.log('refresh');
+  setTimeout(function () {
+    uni.stopPullDownRefresh();
+  }, 1000);
+}
+const actionsClick = (params) => {
+  switch (params){
+    case '分享':
+      handleShare();
+      break;
+    case '点赞':
+      commentList.giveThumbsUp = !commentList.giveThumbsUp;
+      break;
+    case '评论':
+      commentList.commentText = '';
       commentList.comment = !commentList.comment
-      commentList.listData.push({
-        name: 'wky',
-        description: commentList.listText,
-        time: transformTime(new Date()),
-        img: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/d8590190-4f28-11eb-b680-7980c8a877b8.png'
-      })
-    }
-    const {useShare} = useNavBar()
-    const  handleShare = () =>{
-       useShare()
-    }
-    return {
-      onPullDownRefresh,
-      actionsClick,
-      handleComment,
-      ...toRefs(commentList),
-    }
+      break;
+    default:
+      break;
   }
+}
+const handleComment = () => {
+  commentList.listText = commentList.commentText
+  commentList.comment = !commentList.comment
+  commentList.listData.push({
+    name: 'wky',
+    description: commentList.listText,
+    time: transformTime(new Date()),
+    img: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/d8590190-4f28-11eb-b680-7980c8a877b8.png'
+  })
+}
+const {useShare,useBack} = useNavBar()
+const  handleShare = () =>{
+  useShare()
+}
+const clickLeft = () => {
+  useBack()
 }
 </script>
 <style lang="scss" scoped>

@@ -133,6 +133,9 @@
                     "key" : "3PJBZ-LMACG-G2OQX-INHZS-2EKVE-JXFFQ"
                 }
             }
+        },
+        "devServer" : {
+            "port" : 60000
         }
     },
     "_spaceID" : "763e865c-8b9f-42cc-9737-3adfb72d4147"

@@ -11,7 +11,7 @@
      </view>
      <view class="uni-screen-position sexTag flex" v-else-if="currentName === 1 && controlType === 'tag'" v-show="showTree">
        <view v-for="(item,index) in sexTag" :key="item.value" class="uni-screen-tag">
-         <uni-tag :text="item.label" :inverted="inverted" @handleTagClick="handleTagClick(index)"
+         <uni-custom-tag :text="item.label" :inverted="inverted" @handleTagClick="handleTagClick(index)"
                   :class="{'active': index === active}"/>
        </view>
      </view>
@@ -26,7 +26,7 @@
        <view v-for="(item,index) in screenTag" :key="item.id" class="uni-screenTag">
          <h3>{{ item.title }}</h3>
          <view class="flex">
-           <uni-tag v-for="(items,ind) in item.tag" :key="item.value" :text="items.label" :inverted="inverted"
+           <uni-custom-tag v-for="(items,ind) in item.tag" :key="item.value" :text="items.label" :inverted="inverted"
                     @handleTagClick="handleTagClick(items.value)" :class="{'active': items.value === active}"/>
          </view>
        </view>

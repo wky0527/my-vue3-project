@@ -2,8 +2,10 @@
   <uni-nav-bar
       title="更多赛事"
       leftIcon="back"
+      statusBar="true"
       @clickLeft="clickLeft"
   />
+  <uni-empty/>
   <view class="match-wrap">
     <img :src="img" alt="">
     <view class="match-sign-up flex justify-content-spacebetween">

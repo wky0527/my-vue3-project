@@ -4,8 +4,10 @@
       rightIcon="more"
       @clickRight="handleShare"
       leftIcon="back"
+      statusBar="true"
       @clickLeft="clickLeft"
   />
+  <uni-empty/>
   <view class="programming-video">
     <video src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
   </view>

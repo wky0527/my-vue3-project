@@ -3,8 +3,10 @@
       title="家长天地"
       rightIcon="more"
       leftIcon="back"
+      statusBar="true"
       @clickLeft="clickLeft"
   />
+  <uni-empty />
   <view class="parent-world-wrap">
     <h3>孩子沉迷游戏怎么办？我做了这四点拯救了儿子</h3>
     <view class="parent-world-main">
@@ -12,8 +14,8 @@
                 thumbnail="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png">
         <text>这是一个带头像和双标题的基础卡片，此示例展示了一个完整的卡片。</text>
       </uni-card>
-      <uni-card cover="https://yan.zxx1359.top/chenmi/assets/img/banner.786d0e93.jpg">
-        <img src="https://yan.zxx1359.top/chenmi/assets/img/banner.786d0e93.jpg" alt="">
+      <uni-card cover="https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/6acec660-4f31-11eb-a16f-5b3e54966275.jpg">
+        <img src="https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/6acec660-4f31-11eb-a16f-5b3e54966275.jpg" alt="" />
       </uni-card>
       <h3>评论列表：</h3>
       <view v-if="listData.length>0">
@@ -45,7 +47,7 @@
   </view>
 </template>
 <script setup>
-import {reactive, ref, toRefs,shallowReactive} from "vue";
+import {reactive, toRefs} from "vue";
 import {transformTime} from '@/utils/time.js';
 import {useNavBar} from "@/composables/useNavBar.js";
 const commentList = reactive({

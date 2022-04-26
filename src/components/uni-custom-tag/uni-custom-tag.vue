@@ -36,10 +36,10 @@ export default {
     const {text, size, type, disabled, inverted, circle} = props;
     const classes = computed(()=>{
       const config = [
-          'uni-tag-' + type,
-          'uni-tag-' + size,
-           isTrue(circle) ? 'uni-tag-circle' : '',
-           isTrue(inverted) ? 'uni-tag-inverted': ''
+          'uni-custom-tag-' + type,
+          'uni-custom-tag-' + size,
+           isTrue(circle) ? 'uni-custom-tag-circle' : '',
+           isTrue(inverted) ? 'uni-custom-tag-inverted': ''
       ]
       return config.join(' ')
     })
@@ -80,7 +80,7 @@ export default {
   height: 40px;
   line-height: 40px;
   text-align: center;
-  color: #fff;
+  color: #000;
 }
 .uni-tag-small  {
   width: 64px;

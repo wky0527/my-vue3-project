@@ -2,8 +2,10 @@
   <uni-nav-bar
       :title="navBar.title"
       :leftIcon="navBar.leftIcon"
+      :statusBar="navBar.statusBar"
       @clickLeft="clickLeft"
   />
+  <uni-empty/>
   <view class="teacher-wrap">
     <view class="teacher-basic">
       <dl class="flex">
@@ -59,6 +61,7 @@ import {useNavBar} from "@/composables/useNavBar.js";
 const navBar = reactive({
   title: '老师详情',
   leftIcon: 'back',
+  statusBar: true
 })
 const current = ref(0)
 const teacherData = ref(['介绍', '评价', '课程'])

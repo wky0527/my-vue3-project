@@ -1,6 +1,18 @@
+<template>
+  <web-view  :webview-styles="webviewStyles" src="http://10.1.129.232:50749/system/ping"></web-view>
+</template>
 <script>
 import {getAccessToken} from "@/utils/auth";
 export default {
+  data() {
+    return {
+      webviewStyles: {
+        progress: {
+          color: '#FF3333'
+        }
+      }
+    }
+  },
   onLaunch: function () {
     if (!getAccessToken) {
       uni.reLaunch({url:'/pages/login/index'})

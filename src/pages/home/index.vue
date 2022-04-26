@@ -4,7 +4,9 @@
       :leftText="navBar.leftText"
       :leftIcon="navBar.leftIcon"
       @clickLeft="chooseCity"
+      :statusBar="navBar.statusBar"
   />
+  <uni-empty/>
   <view class="home-banner">
     <swiper class="swiper"
             :indicator-dots="bannerConfig.indicatorDots"
@@ -117,33 +119,34 @@
     </h3>
     <navigator :url="'./match'">
       <swiper class="swiper"
+              ref="target"
               :indicator-dots="bannerConfig.indicatorDots"
               :autoplay="bannerConfig.autoplay"
               :interval="bannerConfig.interval"
               :duration="bannerConfig.duration"
       >
-        <swiper-item v-for="(item,index) in homeBanner" :key="index">
-          <img class="swiper-item uni-bg-red" v-lazyLoad="item"/>
+        <swiper-item v-for="(item,index) in homeBanner" :key="index"  v-if="targetIsVisible">
+          <img class="swiper-item" :src="item"/>
         </swiper-item>
       </swiper>
     </navigator>
   </view>
 </template>
 <script setup>
-import {onMounted, reactive, computed, ref} from 'vue';
+import {onMounted, reactive, computed, ref, getCurrentInstance, watch} from 'vue';
 import store from "@/store";
 import {introduceTeacher} from "@/api/home.js";
-import {useAddressParams} from "@/composables/useAddressParams.js";
+import {useAddressParams} from "@/composables/useAddressParams";
+import {useIntersectionObserve} from '@/composables/useIntersectionObserve'
 const {curRouteH, curRouteApp} = useAddressParams();
-// const cityParams = reactive({
-//   code: '',
-//   name: ''
-// })
+const {target,targetIsVisible} = useIntersectionObserve();
+const homeBanner =  computed(() => store.getters.config['home_banner'])
 const cityCode = ref('')
 const navBar = reactive({
   title: '编程到家',
   leftText: '',
   leftIcon: 'location',
+  statusBar: true
 })
 const teacherData = reactive({
   highSchool: [],
@@ -173,7 +176,6 @@ onMounted(() => {
   cityCode.value = curRouteHCode
   //#endif
 })
-const homeBanner = computed(() => store.getters.config['home_banner']);
 const chooseCity = () => {
   uni.reLaunch({
     url: `/pages/city/index?code=${cityCode.value}&name=${navBar.leftText}`
@@ -195,6 +197,7 @@ const selectTeacher = (e) => {
     teacherList.current = e.currentIndex;
   }
 }
+
 </script>
 <style scoped lang="scss">
 .iconfont {

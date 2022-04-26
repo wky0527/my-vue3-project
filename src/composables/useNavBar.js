@@ -31,7 +31,14 @@ export function useNavBar(){
         });
     }
     const useBack = () => {
+       //#ifdef APP-PLUS
+      uni.navigateBack({
+          delta: 1
+      })
+        //#endif
+        //#ifdef H5
         history.back()
+        //#endif
     }
     return {
         useShare,

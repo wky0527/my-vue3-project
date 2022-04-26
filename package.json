@@ -4,7 +4,6 @@
   "scripts": {
     "dev:app": "uni -p app",
     "dev:custom": "uni -p",
-    "dev:h5": "uni",
     "dev:h5:ssr": "uni --ssr",
     "dev:mp-alipay": "uni -p mp-alipay",
     "dev:mp-baidu": "uni -p mp-baidu",
@@ -45,6 +44,8 @@
     "@dcloudio/uni-mp-weixin": "^3.0.0-alpha-3031120220216001",
     "@dcloudio/uni-quickapp-webview": "^3.0.0-alpha-3031120220216001",
     "@hyoga/uni-socket.io": "^3.0.4",
+    "@vueuse/components": "^8.3.1",
+    "@vueuse/core": "^8.3.1",
     "nodejs-websocket": "^1.7.2",
     "sass": "^1.49.8",
     "vue": "^3.2.30",
